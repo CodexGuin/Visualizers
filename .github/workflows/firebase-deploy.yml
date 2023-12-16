@@ -15,7 +15,8 @@ jobs:
     - name: Set up Flutter environment
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: 'latest' # Specify your Flutter version
+        flutter-version: '3.16.3'
+        channel: 'stable'
 
     - name: Install dependencies
       run: flutter pub get

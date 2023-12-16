@@ -1,0 +1,31 @@
+name: Deploy to Firebase Hosting on push
+
+on:
+  push:
+    branches:
+      - main  # Set your default branch
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Flutter environment
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: 'latest' # Specify your Flutter version
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build
+      run: flutter build web  # Build your Flutter web app
+
+    - name: Deploy to Firebase
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only hosting
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

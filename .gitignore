@@ -58,7 +58,14 @@ analysis_benchmark.json
 .pub-preload-cache/
 .pub-cache/
 .pub/
-build/
+build/assets
+build/2e6e24d403bcd022fae8106c7629e2bc
+build/8fcb5a46ce468063338ec1369b4a04a5
+build/flutter_assets
+build/windows
+build/.last_build_id
+build/25c7fdbd37e2353f978846c51150293c.cache.dill.track.dill
+build/59906ac2072ea23d943f4334a0ae780f.cache.dill.track.dill
 flutter_*.png
 linked_*.ds
 unlinked.ds
@@ -136,6 +143,7 @@ app.*.symbols
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
 !.vscode/settings.json
+!build/web/
 
 # Firebase stuff
 

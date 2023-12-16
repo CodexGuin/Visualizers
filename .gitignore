@@ -138,7 +138,6 @@ app.*.symbols
 !.vscode/settings.json
 
 # Firebase stuff
-web/
 
 # Firebase configuration
 /android/app/google-services.json
@@ -158,3 +157,5 @@ web/
 # Secret Keys and Configurations
 /secrets.json
 /service-account-file.json
+
+.zSecrets.txt

@@ -213,7 +213,7 @@ class _PathfinderState extends State<Pathfinder> {
         appBar: Headers().defaultBar(leading: Headers().subpageButton(context)),
         body: Column(children: [
           Headers().headerOne('Pathfinder'),
-          Headers().headerTwo('Choose from a variety of algorithms'),
+          Headers().headerTwo('Choose from a collection of algorithms'),
           Flexible(
               child: Container(
                   //color: Colors.white.withOpacity(0.05), // ! Debugging

@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "codexguin-visualizers",
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

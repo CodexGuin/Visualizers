@@ -155,7 +155,6 @@ app.*.symbols
 /.env*
 
 # Firebase local emulators
-/firebase.json
 /.firebaserc
 /.firebase/
 

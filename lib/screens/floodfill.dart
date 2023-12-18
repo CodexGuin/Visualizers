@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:collection';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show Uint8List, rootBundle;
 
 import 'package:audioplayers/audioplayers.dart';
@@ -29,7 +30,10 @@ class AudioService {
       final player = _players[_currentPlayerIndex];
 
       // Play the audio data from memory
-      await player.play(BytesSource(_audioData!));
+      if (!kIsWeb) {
+        // * Only play on non-web platforms
+        await player.play(BytesSource(_audioData!));
+      }
 
       // Move to the next player for the next call
       _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.length;

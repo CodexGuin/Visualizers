@@ -37,18 +37,13 @@ class Cell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Center(
-          child: Container(
-            decoration: BoxDecoration(
-              color: color,
-              border: Border.all(color: Colors.black87),
-            ),
-          ),
-        ),
-      ),
-    );
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+            onTap: onTap,
+            child: Center(
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: color,
+                        border: Border.all(color: Colors.black87))))));
   }
 }

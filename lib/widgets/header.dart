@@ -44,7 +44,7 @@ class Headers {
     return Center(
         child: Text(headerText,
             style: const TextStyle(
-                color: Colors.white70,
+                color: Colors.white54,
                 fontWeight: FontWeight.w300,
                 fontSize: 15)));
   }

@@ -37,7 +37,7 @@ class _PathfinderState extends State<Pathfinder> {
   // * Start and end idx
   int? startIdx, endIdx;
 
-  // Animation sequence
+  // * Animation sequence
   List<int> animationSequence = [];
 
   void onCellClick(int idx) {

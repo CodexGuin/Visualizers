@@ -16,7 +16,7 @@ void main() async {
 
     WindowOptions myOption = const WindowOptions(
         size: Size(1000, 900),
-        minimumSize: Size(950, 900),
+        //minimumSize: Size(950, 900),
         center: true,
         title: 'Visualizers',
         titleBarStyle: TitleBarStyle.hidden);

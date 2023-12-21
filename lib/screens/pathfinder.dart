@@ -299,11 +299,13 @@ class _PathfinderState extends State<Pathfinder> {
                                         .getColorFromState(BoxStateColor.END),
                                     text: 'End'),
                                 StatesBox(
-                                    onTap: () =>
-                                        onStateSelect(BoxStateColor.PATH),
                                     color: PathfinderState()
                                         .getColorFromState(BoxStateColor.PATH),
-                                    text: 'Path')
+                                    text: 'Path'),
+                                StatesBox(
+                                    color: PathfinderState().getColorFromState(
+                                        BoxStateColor.SEARCHING),
+                                    text: 'Search')
                               ],
                             ),
                           ),
@@ -535,7 +537,7 @@ class _StatesBoxState extends State<StatesBox> {
               style: const TextStyle(color: Colors.white, fontSize: 15)),
           const SizedBox(height: 10),
           // Check if the state is not 'Visited'
-          if (widget.text != 'Path')
+          if (widget.text != 'Path' && widget.text != 'Search')
             MouseRegion(
                 cursor: SystemMouseCursors.click,
                 onHover: (val) {
@@ -560,8 +562,7 @@ class _StatesBoxState extends State<StatesBox> {
                                 Border.all(color: Colors.white, width: 2)))))
           else
             // If the state is 'Visited', just display the container without MouseRegion and GestureDetector
-            AnimatedContainer(
-                duration: const Duration(milliseconds: 100),
+            Container(
                 height: size,
                 width: size,
                 decoration: BoxDecoration(

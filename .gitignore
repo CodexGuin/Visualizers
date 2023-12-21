@@ -166,3 +166,7 @@ app.*.symbols
 /service-account-file.json
 
 .zSecrets.txt
+
+# Additional weird file formats
+*.stamp
+*.cache.dill.track.dill

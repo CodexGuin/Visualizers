@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:visualizer/screens/floodfill.dart';
 import 'package:visualizer/screens/main_screen.dart';
+import 'package:visualizer/screens/nerual_network.dart';
 import 'package:visualizer/screens/pathfinder.dart';
 import 'package:visualizer/screens/settings.dart';
 import 'package:visualizer/screens/sort.dart';
@@ -54,6 +55,7 @@ class MainApp extends StatelessWidget {
         '/sort': (context) => const Sort(),
         '/floodfill': (context) => const FloodFill(),
         '/settings': (context) => const Settings(),
+        '/neural_network': (context) => const NeuralNetwork(),
       },
     );
   }

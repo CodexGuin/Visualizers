@@ -219,50 +219,48 @@ class _PathfinderState extends State<Pathfinder> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Headers().backgroundColorDark,
-        appBar: Headers().defaultBar(leading: Headers().subpageButton(context)),
+        appBar: Headers().defaultBar(
+            leading: Headers().subpageButton(context),
+            headerOne: 'Pathfinder',
+            headerTwo: 'Visualize pathfinding algorithms'),
         body: Column(children: [
-          Headers().headerOne('Pathfinder'),
-          Headers().headerTwo('Choose from a collection of algorithms'),
           Flexible(
               child: Container(
                   //color: Colors.white.withOpacity(0.05), // ! Debugging
-                  margin: const EdgeInsets.all(30),
-                  padding: const EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(10),
                   child: Column(children: [
                     // * Maze grid
                     Flexible(
-                      flex: 2,
-                      child: AspectRatio(
-                        aspectRatio: maxWidth / maxHeight,
-                        child: Center(
-                          child: SizedBox(
-                            width: maxWidth,
-                            height: maxHeight,
+                        flex: 2,
+                        child: AspectRatio(
+                            aspectRatio: maxWidth / maxHeight,
                             child: Center(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(
-                                        color: Colors.black, width: 2)),
-                                child: GridView.count(
-                                  crossAxisCount: numBoxInRow,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  children: List.generate(
-                                    currentGridSize,
-                                    (index) => Cell(
-                                        onTap: () => onCellClick(index),
-                                        color: PathfinderState()
-                                            .getColorFromState(
-                                                gridState[index]),
-                                        idx: index),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                                child: SizedBox(
+                                    width: maxWidth,
+                                    height: maxHeight,
+                                    child: Center(
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                    color: Colors.black,
+                                                    width: 2)),
+                                            child: GridView.count(
+                                                crossAxisCount: numBoxInRow,
+                                                physics:
+                                                    const NeverScrollableScrollPhysics(),
+                                                children: List.generate(
+                                                    currentGridSize,
+                                                    (index) => Cell(
+                                                        onTap: () =>
+                                                            onCellClick(index),
+                                                        color: PathfinderState()
+                                                            .getColorFromState(
+                                                                gridState[
+                                                                    index]),
+                                                        idx: index))))))))),
+                    const Gap(20),
 
                     // * Action row
                     Flexible(
@@ -272,203 +270,209 @@ class _PathfinderState extends State<Pathfinder> {
                             children: [
                           // * States (DONE)
                           Flexible(
-                            child: Row(
-                              children: [
-                                StatesBox(
-                                    onTap: () =>
-                                        onStateSelect(BoxStateColor.OPEN),
-                                    color: PathfinderState()
-                                        .getColorFromState(BoxStateColor.OPEN),
-                                    text: 'Open'),
-                                StatesBox(
-                                    onTap: () =>
-                                        onStateSelect(BoxStateColor.WALL),
-                                    color: PathfinderState()
-                                        .getColorFromState(BoxStateColor.WALL),
-                                    text: 'Wall'),
-                                StatesBox(
-                                    onTap: () =>
-                                        onStateSelect(BoxStateColor.START),
-                                    color: PathfinderState()
-                                        .getColorFromState(BoxStateColor.START),
-                                    text: 'Start'),
-                                StatesBox(
-                                    onTap: () =>
-                                        onStateSelect(BoxStateColor.END),
-                                    color: PathfinderState()
-                                        .getColorFromState(BoxStateColor.END),
-                                    text: 'End'),
-                                StatesBox(
-                                    color: PathfinderState()
-                                        .getColorFromState(BoxStateColor.PATH),
-                                    text: 'Path'),
-                                StatesBox(
-                                    color: PathfinderState().getColorFromState(
-                                        BoxStateColor.SEARCHING),
-                                    text: 'Search')
-                              ],
-                            ),
-                          ),
+                              child: Row(
+                                  children: MediaQuery.of(context).size.width >
+                                          1050
+                                      ? [
+                                          // * Desktop view
+                                          StatesBox(
+                                              onTap: () => onStateSelect(
+                                                  BoxStateColor.OPEN),
+                                              color: PathfinderState()
+                                                  .getColorFromState(
+                                                      BoxStateColor.OPEN),
+                                              text: 'Open'),
+                                          StatesBox(
+                                              onTap: () => onStateSelect(
+                                                  BoxStateColor.WALL),
+                                              color: PathfinderState()
+                                                  .getColorFromState(
+                                                      BoxStateColor.WALL),
+                                              text: 'Wall'),
+                                          StatesBox(
+                                              onTap: () => onStateSelect(
+                                                  BoxStateColor.START),
+                                              color: PathfinderState()
+                                                  .getColorFromState(
+                                                      BoxStateColor.START),
+                                              text: 'Start'),
+                                          StatesBox(
+                                              onTap: () => onStateSelect(
+                                                  BoxStateColor.END),
+                                              color: PathfinderState()
+                                                  .getColorFromState(
+                                                      BoxStateColor.END),
+                                              text: 'End'),
+                                          StatesBox(
+                                              color: PathfinderState()
+                                                  .getColorFromState(
+                                                      BoxStateColor.PATH),
+                                              text: 'Path'),
+                                          StatesBox(
+                                              color: PathfinderState()
+                                                  .getColorFromState(
+                                                      BoxStateColor.SEARCHING),
+                                              text: 'Search')
+                                        ]
+                                      : [
+                                          // * < Desktop width
+                                          Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Row(children: [
+                                                  StatesBox(
+                                                      onTap: () =>
+                                                          onStateSelect(
+                                                              BoxStateColor
+                                                                  .OPEN),
+                                                      color: PathfinderState()
+                                                          .getColorFromState(
+                                                              BoxStateColor
+                                                                  .OPEN),
+                                                      text: 'Open'),
+                                                  StatesBox(
+                                                      onTap: () =>
+                                                          onStateSelect(
+                                                              BoxStateColor
+                                                                  .WALL),
+                                                      color: PathfinderState()
+                                                          .getColorFromState(
+                                                              BoxStateColor
+                                                                  .WALL),
+                                                      text: 'Wall'),
+                                                  StatesBox(
+                                                      onTap: () =>
+                                                          onStateSelect(
+                                                              BoxStateColor
+                                                                  .START),
+                                                      color: PathfinderState()
+                                                          .getColorFromState(
+                                                              BoxStateColor
+                                                                  .START),
+                                                      text: 'Start')
+                                                ]),
+                                                Row(children: [
+                                                  StatesBox(
+                                                      onTap: () =>
+                                                          onStateSelect(
+                                                              BoxStateColor
+                                                                  .END),
+                                                      color: PathfinderState()
+                                                          .getColorFromState(
+                                                              BoxStateColor
+                                                                  .END),
+                                                      text: 'End'),
+                                                  StatesBox(
+                                                      color: PathfinderState()
+                                                          .getColorFromState(
+                                                              BoxStateColor
+                                                                  .PATH),
+                                                      text: 'Path'),
+                                                  StatesBox(
+                                                      color: PathfinderState()
+                                                          .getColorFromState(
+                                                              BoxStateColor
+                                                                  .SEARCHING),
+                                                      text: 'Search')
+                                                ])
+                                              ])
+                                        ])),
                           const Gap(10),
 
                           // * Slider (DONE)
                           Flexible(
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Adjust maze size',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20)),
-                                  SizedBox(
-                                    width: 250,
-                                    child: SliderTheme(
-                                        data: SliderTheme.of(context).copyWith(
-                                            tickMarkShape:
-                                                const RoundSliderTickMarkShape(
-                                                    tickMarkRadius: 0)),
-                                        child: Slider(
-                                            value: numBoxInRow.toDouble(),
-                                            min: 4,
-                                            max: 50,
-                                            label: numBoxInRow.toString(),
-                                            divisions: 23,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                // Calculate the position of the slider
-                                                int position =
-                                                    ((val - 4) / 2).round();
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                const Text('Adjust maze size',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20)),
+                                Center(
+                                    child: SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width >
+                                                    1050
+                                                ? 500
+                                                : 250,
+                                        child: SliderTheme(
+                                            data: SliderTheme.of(context).copyWith(
+                                                tickMarkShape:
+                                                    const RoundSliderTickMarkShape(
+                                                        tickMarkRadius: 0)),
+                                            child: Slider(
+                                                value: numBoxInRow.toDouble(),
+                                                min: 4,
+                                                max: 50,
+                                                label: numBoxInRow.toString(),
+                                                divisions: 23,
+                                                onChanged: (val) {
+                                                  setState(() {
+                                                    // Calculate the position of the slider
+                                                    int position =
+                                                        ((val - 4) / 2).round();
 
-                                                // Map the position to the actual value
-                                                numBoxInRow =
-                                                    4 + (position * 2);
-                                                //numBoxInRow = val.toInt();
-                                                startIdx = null;
-                                                endIdx = null;
-                                                animationSequence.clear();
-                                                // Calculate grid variables
-                                                calculateGridVariables();
-                                                // Update grid state based on new grid size
-                                                gridState = List.generate(
-                                                    currentGridSize,
-                                                    (idx) =>
-                                                        BoxStateColor.OPEN);
-                                              });
-                                            })),
-                                  )
-                                ]),
-                          ),
+                                                    // Map the position to the actual value
+                                                    numBoxInRow =
+                                                        4 + (position * 2);
+                                                    //numBoxInRow = val.toInt();
+                                                    startIdx = null;
+                                                    endIdx = null;
+                                                    animationSequence.clear();
+                                                    // Calculate grid variables
+                                                    calculateGridVariables();
+                                                    // Update grid state based on new grid size
+                                                    gridState = List.generate(
+                                                        currentGridSize,
+                                                        (idx) =>
+                                                            BoxStateColor.OPEN);
+                                                  });
+                                                }))))
+                              ])),
                           const Gap(10),
 
                           // * Buttons (DONE)
                           Flexible(
-                              child: MediaQuery.of(context).size.height > 820
-                                  ? Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                          ActionButtons(
-                                              text: 'Clear grid',
-                                              onTap: clearGrid),
-                                          const Gap(10),
-                                          const ActionButtons(
-                                              text: 'Generate maze (Lazy)'),
-                                          const Gap(10),
-                                          ActionButtons(
-                                            text: 'Debug',
-                                            onTap: () {
-                                              for (int i = 0;
-                                                  i < gridState.length;
-                                                  i++) {
-                                                print(
-                                                    'Cell $i: ${gridState[i]}');
-                                              }
-                                            },
-                                          ),
-                                          const Gap(10),
-                                          ActionButtons(
-                                              text: 'BFS',
-                                              onTap: () {
-                                                if (startIdx != null &&
-                                                    endIdx != null) {
-                                                  bfs();
-                                                } else if (startIdx == null &&
-                                                    endIdx == null) {
-                                                  customScaffoldMsg(context,
-                                                      'Select start and end index!');
-                                                } else if (startIdx == null) {
-                                                  customScaffoldMsg(context,
-                                                      'Select start index!');
-                                                } else if (endIdx == null) {
-                                                  customScaffoldMsg(context,
-                                                      'Select end index!');
-                                                }
-                                              })
-                                        ])
-                                  : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                          Column(
-                                            children: [
-                                              Expanded(
-                                                child: ActionButtons(
-                                                    text: 'Clear grid',
-                                                    onTap: clearGrid),
-                                              ),
-                                              const Gap(10),
-                                              const Expanded(
-                                                child: ActionButtons(
-                                                    text:
-                                                        'Generate maze (Lazy)'),
-                                              )
-                                            ],
-                                          ),
-                                          Column(
-                                            children: [
-                                              Expanded(
-                                                child: ActionButtons(
-                                                  text: 'Debug',
-                                                  onTap: () {
-                                                    for (int i = 0;
-                                                        i < gridState.length;
-                                                        i++) {
-                                                      print(
-                                                          'Cell $i: ${gridState[i]}');
-                                                    }
-                                                  },
-                                                ),
-                                              ),
-                                              const Gap(10),
-                                              Expanded(
-                                                child: ActionButtons(
-                                                    text: 'BFS',
-                                                    onTap: () {
-                                                      if (startIdx != null &&
-                                                          endIdx != null) {
-                                                        bfs();
-                                                      } else if (startIdx ==
-                                                              null &&
-                                                          endIdx == null) {
-                                                        customScaffoldMsg(
-                                                            context,
-                                                            'Select start and end index!');
-                                                      } else if (startIdx ==
-                                                          null) {
-                                                        customScaffoldMsg(
-                                                            context,
-                                                            'Select start index!');
-                                                      } else if (endIdx ==
-                                                          null) {
-                                                        customScaffoldMsg(
-                                                            context,
-                                                            'Select end index!');
-                                                      }
-                                                    }),
-                                              )
-                                            ],
-                                          ),
-                                        ]))
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                ActionButtons(
+                                    text: 'Clear grid', onTap: clearGrid),
+                                const Gap(10),
+                                const ActionButtons(
+                                    text: 'Generate maze (Lazy)'),
+                                const Gap(10),
+                                ActionButtons(
+                                    text: 'Debug',
+                                    onTap: () {
+                                      for (int i = 0;
+                                          i < gridState.length;
+                                          i++) {
+                                        print('Cell $i: ${gridState[i]}');
+                                      }
+                                    }),
+                                const Gap(10),
+                                ActionButtons(
+                                    text: 'BFS',
+                                    onTap: () {
+                                      if (startIdx != null && endIdx != null) {
+                                        bfs();
+                                      } else if (startIdx == null &&
+                                          endIdx == null) {
+                                        customScaffoldMsg(context,
+                                            'Select start and end index!');
+                                      } else if (startIdx == null) {
+                                        customScaffoldMsg(
+                                            context, 'Select start index!');
+                                      } else if (endIdx == null) {
+                                        customScaffoldMsg(
+                                            context, 'Select end index!');
+                                      }
+                                    })
+                              ]))
                         ]))
                   ])))
         ]));
@@ -480,11 +484,10 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> customScaffoldMsg(
     BuildContext context, String msg) {
   return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Center(
-    child: Text(
-      msg,
-      style: const TextStyle(color: Colors.white, fontSize: 20),
-    ),
-  )));
+          child: Text(
+    msg,
+    style: const TextStyle(color: Colors.white, fontSize: 20),
+  ))));
 }
 
 // * Action row buttons
@@ -497,10 +500,9 @@ class ActionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.purple.shade800),
-          foregroundColor: MaterialStateProperty.all(Colors.white),
-          fixedSize: MaterialStateProperty.all<Size>(const Size(200, 30)),
-        ),
+            backgroundColor: MaterialStateProperty.all(Colors.purple.shade800),
+            foregroundColor: MaterialStateProperty.all(Colors.white),
+            fixedSize: MaterialStateProperty.all<Size>(const Size(200, 30))),
         onPressed: onTap,
         child: Text(text));
   }

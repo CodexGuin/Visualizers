@@ -100,10 +100,12 @@ class _SortState extends State<Sort> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Headers().backgroundColorDark,
-        appBar: Headers().defaultBar(leading: Headers().subpageButton(context)),
+        appBar: Headers().defaultBar(
+            leading: Headers().subpageButton(context),
+            headerOne: 'Sorting',
+            headerTwo: 'Visualize sorting algorithms'),
         body: Column(children: [
-          Headers().headerOne('Sort'),
-          Headers().headerTwo('Visualize sorting algorithms'),
+          const Gap(20),
           Flexible(
               child: Column(children: [
             // * Column visualizer

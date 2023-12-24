@@ -205,160 +205,330 @@ class _FloodFillState extends State<FloodFill> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Headers().backgroundColorDark,
-        appBar: Headers().defaultBar(leading: Headers().subpageButton(context)),
+        appBar: Headers().defaultBar(
+            leading: Headers().subpageButton(context),
+            headerOne: 'Flood Fill',
+            headerTwo: 'Visualize how painting works'),
         body: Column(children: [
-          Headers().headerOne('Flood Fill'),
-          Headers().headerTwo('Visualize how painting works'),
           Flexible(
               child: Container(
-                  padding: const EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(10),
                   child: Column(children: [
                     // * Painting grid
                     Flexible(
                         flex: 4,
-                        child: SizedBox(
-                            width: 900,
-                            height: 452,
-                            child: Center(
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            color: Colors.black, width: 2)),
-                                    child: GridView.builder(
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount:
-                                                    gridSize.toInt()),
-                                        itemCount: gridSize.toInt() *
-                                            gridSize.toInt() ~/
-                                            2,
-                                        itemBuilder: (context, index) {
-                                          // Ensures the list has enough colors
-                                          if (index >= cellColors.length) {
-                                            cellColors.add(Colors.white);
-                                          }
+                        child: AspectRatio(
+                            aspectRatio: 900 / 452,
+                            child: SizedBox(
+                                width: 900,
+                                height: 452,
+                                child: Center(
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                color: Colors.black, width: 2)),
+                                        child: GridView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount:
+                                                        gridSize.toInt()),
+                                            itemCount: gridSize.toInt() *
+                                                gridSize.toInt() ~/
+                                                2,
+                                            itemBuilder: (context, index) {
+                                              // Ensures the list has enough colors
+                                              if (index >= cellColors.length) {
+                                                cellColors.add(Colors.white);
+                                              }
 
-                                          return GestureDetector(
-                                              onTap: () => onCellClick(index),
-                                              child: MouseRegion(
-                                                  cursor:
-                                                      SystemMouseCursors.click,
-                                                  child: Container(
-                                                      decoration: BoxDecoration(
-                                                          color:
-                                                              cellColors[index],
-                                                          border: Border.all(
-                                                              color: Colors
-                                                                  .black)))));
-                                        }))))),
+                                              return GestureDetector(
+                                                  onTap: () =>
+                                                      onCellClick(index),
+                                                  child: MouseRegion(
+                                                      cursor: SystemMouseCursors
+                                                          .click,
+                                                      child: Container(
+                                                          decoration: BoxDecoration(
+                                                              color: cellColors[
+                                                                  index],
+                                                              border: Border.all(
+                                                                  color: Colors
+                                                                      .black)))));
+                                            })))))),
 
                     // * Action row
                     Flexible(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                          // * Grid size slider
-                          Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Adjust grid size',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20)),
-                                SliderTheme(
-                                    data: SliderTheme.of(context).copyWith(
-                                        tickMarkShape:
-                                            const RoundSliderTickMarkShape(
-                                                tickMarkRadius: 0),
-                                        showValueIndicator:
-                                            ShowValueIndicator.always),
-                                    child: Slider(
-                                        value: gridSize,
-                                        min: 5,
-                                        max: 50,
-                                        label: gridSize.toInt().toString(),
-                                        onChanged: (val) {
+                        child: MediaQuery.of(context).size.width > 900
+                            ? Row(
+                                // * If width > 900
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                    // * Grid size slider
+                                    Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const Text('Grid size',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20)),
+                                          SliderTheme(
+                                              data: SliderTheme.of(context)
+                                                  .copyWith(
+                                                      tickMarkShape:
+                                                          const RoundSliderTickMarkShape(
+                                                              tickMarkRadius:
+                                                                  0),
+                                                      showValueIndicator:
+                                                          ShowValueIndicator
+                                                              .always),
+                                              child: Slider(
+                                                  value: gridSize,
+                                                  min: 5,
+                                                  max: 50,
+                                                  label: gridSize
+                                                      .toInt()
+                                                      .toString(),
+                                                  onChanged: (val) {
+                                                    setState(() {
+                                                      initCellStates();
+                                                      gridSize =
+                                                          ((val / 2).round() *
+                                                              2);
+                                                    });
+                                                  }))
+                                        ]),
+                                    const Gap(30),
+
+                                    // * Animation speed slider
+                                    Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const Text('Animation speed',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20)),
+                                          SliderTheme(
+                                              data: SliderTheme.of(context)
+                                                  .copyWith(
+                                                      tickMarkShape:
+                                                          const RoundSliderTickMarkShape(
+                                                              tickMarkRadius:
+                                                                  0),
+                                                      showValueIndicator:
+                                                          ShowValueIndicator
+                                                              .always),
+                                              child: Slider(
+                                                  value: animationSpeedinMS
+                                                      .toDouble(),
+                                                  min: 0,
+                                                  max: 1000,
+                                                  label: animationSpeedinMS
+                                                      .toString(),
+                                                  onChanged: (val) {
+                                                    setState(() {
+                                                      animationSpeedinMS =
+                                                          val.toInt();
+                                                    });
+                                                  }))
+                                        ]),
+                                    const Gap(30),
+
+                                    // * Colors
+                                    ColorChooser(
+                                        onColorChange: onColorChange,
+                                        text: 'Pink',
+                                        color: Colors.pink),
+                                    ColorChooser(
+                                        onColorChange: onColorChange,
+                                        text: 'Green',
+                                        color: Colors.green),
+                                    ColorChooser(
+                                        onColorChange: onColorChange,
+                                        text: 'Blue',
+                                        color: Colors.blue),
+                                    ColorChooser(
+                                        onColorChange: onColorChange,
+                                        text: 'Black',
+                                        color: Colors.black),
+                                    ColorChooser(
+                                        onColorChange: onColorChange,
+                                        text: 'White',
+                                        color: Colors.white),
+                                    const Gap(30),
+
+                                    // * Toggling between bucket and single
+                                    ToggleSwitch(
+                                        minHeight: 40,
+                                        initialLabelIndex: isBucket ? 0 : 1,
+                                        activeBgColor: const [
+                                          Color(0xFF6750A4)
+                                        ],
+                                        activeFgColor: Colors.white,
+                                        inactiveBgColor: Colors.white60,
+                                        animate: true,
+                                        curve: Easing.standard,
+                                        labels: const ['Bucket', 'Single'],
+                                        onToggle: (index) {
                                           setState(() {
-                                            initCellStates();
-                                            gridSize = ((val / 2).round() * 2);
+                                            isBucket = index == 0;
                                           });
-                                        }))
-                              ]),
-                          const Gap(30),
+                                        })
+                                  ])
+                            : Column(
+                                // * If width < 900
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          // * Grid size slider
+                                          Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                const Text('Grid size',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20)),
+                                                SliderTheme(
+                                                    data: SliderTheme.of(
+                                                            context)
+                                                        .copyWith(
+                                                            tickMarkShape:
+                                                                const RoundSliderTickMarkShape(
+                                                                    tickMarkRadius:
+                                                                        0),
+                                                            showValueIndicator:
+                                                                ShowValueIndicator
+                                                                    .always),
+                                                    child: Slider(
+                                                        value: gridSize,
+                                                        min: 5,
+                                                        max: 50,
+                                                        label: gridSize
+                                                            .toInt()
+                                                            .toString(),
+                                                        onChanged: (val) {
+                                                          setState(() {
+                                                            initCellStates();
+                                                            gridSize = ((val /
+                                                                        2)
+                                                                    .round() *
+                                                                2);
+                                                          });
+                                                        }))
+                                              ]),
+                                          const Gap(30),
 
-                          // * Animation speed slider
-                          Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Adjust animation speed',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20)),
-                                SliderTheme(
-                                    data: SliderTheme.of(context).copyWith(
-                                        tickMarkShape:
-                                            const RoundSliderTickMarkShape(
-                                                tickMarkRadius: 0),
-                                        showValueIndicator:
-                                            ShowValueIndicator.always),
-                                    child: Slider(
-                                        value: animationSpeedinMS.toDouble(),
-                                        min: 0,
-                                        max: 1000,
-                                        label: animationSpeedinMS.toString(),
-                                        onChanged: (val) {
-                                          setState(() {
-                                            animationSpeedinMS = val.toInt();
-                                          });
-                                        }))
-                              ]),
-                          const Gap(30),
+                                          // * Animation speed slider
+                                          Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                const Text('Animation speed',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20)),
+                                                SliderTheme(
+                                                    data: SliderTheme.of(
+                                                            context)
+                                                        .copyWith(
+                                                            tickMarkShape:
+                                                                const RoundSliderTickMarkShape(
+                                                                    tickMarkRadius:
+                                                                        0),
+                                                            showValueIndicator:
+                                                                ShowValueIndicator
+                                                                    .always),
+                                                    child: Slider(
+                                                        value:
+                                                            animationSpeedinMS
+                                                                .toDouble(),
+                                                        min: 0,
+                                                        max: 1000,
+                                                        label:
+                                                            animationSpeedinMS
+                                                                .toString(),
+                                                        onChanged: (val) {
+                                                          setState(() {
+                                                            animationSpeedinMS =
+                                                                val.toInt();
+                                                          });
+                                                        }))
+                                              ])
+                                        ]),
+                                    const Gap(10),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          // * Colors
+                                          ColorChooser(
+                                              onColorChange: onColorChange,
+                                              text: 'Pink',
+                                              color: Colors.pink),
+                                          ColorChooser(
+                                              onColorChange: onColorChange,
+                                              text: 'Green',
+                                              color: Colors.green),
+                                          ColorChooser(
+                                              onColorChange: onColorChange,
+                                              text: 'Blue',
+                                              color: Colors.blue),
+                                          ColorChooser(
+                                              onColorChange: onColorChange,
+                                              text: 'Black',
+                                              color: Colors.black),
+                                          ColorChooser(
+                                              onColorChange: onColorChange,
+                                              text: 'White',
+                                              color: Colors.white),
+                                          const Gap(50),
 
-                          // * Colors
-                          ColorChooser(
-                              onColorChange: onColorChange,
-                              text: 'Pink',
-                              color: Colors.pink),
-                          const Gap(15),
-                          ColorChooser(
-                              onColorChange: onColorChange,
-                              text: 'Green',
-                              color: Colors.green),
-                          const Gap(15),
-                          ColorChooser(
-                              onColorChange: onColorChange,
-                              text: 'Blue',
-                              color: Colors.blue),
-                          const Gap(15),
-                          ColorChooser(
-                              onColorChange: onColorChange,
-                              text: 'Black',
-                              color: Colors.black),
-                          const Gap(15),
-                          ColorChooser(
-                              onColorChange: onColorChange,
-                              text: 'White',
-                              color: Colors.white),
-                          const Gap(30),
-
-                          // * Toggling between bucket and single
-                          ToggleSwitch(
-                              minHeight: 40,
-                              initialLabelIndex: isBucket ? 0 : 1,
-                              activeBgColor: const [Color(0xFF6750A4)],
-                              activeFgColor: Colors.white,
-                              inactiveBgColor: Colors.white60,
-                              animate: true,
-                              curve: Easing.standard,
-                              labels: const ['Bucket', 'Single'],
-                              onToggle: (index) {
-                                setState(() {
-                                  isBucket = index == 0;
-                                });
-                              })
-                        ]))
+                                          // * Toggling between bucket and single
+                                          ToggleSwitch(
+                                              minHeight: 40,
+                                              initialLabelIndex:
+                                                  isBucket ? 0 : 1,
+                                              activeBgColor: const [
+                                                Color(0xFF6750A4)
+                                              ],
+                                              activeFgColor: Colors.white,
+                                              inactiveBgColor: Colors.white60,
+                                              animate: true,
+                                              curve: Easing.standard,
+                                              labels: const [
+                                                'Bucket',
+                                                'Single'
+                                              ],
+                                              onToggle: (index) {
+                                                setState(() {
+                                                  isBucket = index == 0;
+                                                });
+                                              })
+                                        ])
+                                  ]))
                   ])))
         ]));
   }

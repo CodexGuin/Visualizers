@@ -21,6 +21,7 @@ class _BoxSelectionState extends State<BoxSelection> {
   Color? hoveredColor = Colors.transparent;
   final _overlayController = OverlayPortalController();
   late String text;
+  int randomDuration = 2;
 
   // * List of colors
   List<Color> colList = [
@@ -46,8 +47,8 @@ class _BoxSelectionState extends State<BoxSelection> {
       text = 'Flood fill';
     } else if (widget.pageRoute == '/sort') {
       text = 'Sorting';
-    } else if (widget.pageRoute == '/terminal') {
-      text = 'Terminal';
+    } else if (widget.pageRoute == '/neural_network') {
+      text = 'Neural Network';
     } else if (widget.pageRoute == '/settings') {
       text = 'Settings';
     } else {
@@ -57,6 +58,7 @@ class _BoxSelectionState extends State<BoxSelection> {
       // Change color only when hover starts
       hoveredColor = getRandomColor();
       _overlayController.toggle();
+      randomDuration = Random().nextInt(4) + 2;
     }
     if (!hovering) {
       // Reset color when hover ends
@@ -99,7 +101,9 @@ class _BoxSelectionState extends State<BoxSelection> {
                                   fontWeight: FontWeight.w200))))));
         },
         child: Animate(
-            effects: [ShimmerEffect(duration: 1.seconds, delay: 5.seconds)],
+            effects: [
+              ShimmerEffect(duration: 1.seconds, delay: randomDuration.seconds)
+            ],
             onPlay: (controller) => controller.repeat(),
             child: MouseRegion(
                 cursor: SystemMouseCursors.click,

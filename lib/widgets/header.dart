@@ -5,28 +5,39 @@ import 'package:window_manager/window_manager.dart';
 class Headers {
   Color backgroundColorDark = const Color(0xFF242529);
 
-  AppBar defaultBar({Widget? leading}) {
+  AppBar defaultBar({Widget? leading, String? headerOne, String? headerTwo}) {
     return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      centerTitle: true,
-      leading: leading,
-      title: DragToMoveArea(
-          child: Container(
-              width: double.infinity,
-              color: Colors.transparent,
-              child: const Text(''))),
-      actions: !kIsWeb
-          ? [
-              IconButton(
-                  icon:
-                      const Icon(Icons.close, size: 20, color: Colors.white38),
-                  onPressed: () async {
-                    await windowManager.close();
-                  })
-            ]
-          : [],
-    );
+        backgroundColor: backgroundColorDark,
+        elevation: 0,
+        centerTitle: true,
+        leading: leading,
+        title: DragToMoveArea(
+            child: Container(
+                width: double.infinity,
+                color: Colors.transparent,
+                child: const Text(''))),
+        actions: !kIsWeb
+            ? [
+                IconButton(
+                    icon: const Icon(Icons.close,
+                        size: 20, color: Colors.white38),
+                    onPressed: () async {
+                      await windowManager.close();
+                    })
+              ]
+            : [],
+        bottom: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: backgroundColorDark,
+            centerTitle: true,
+            toolbarHeight: 100,
+            title: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Headers().headerOne(headerOne ?? ''),
+                  Headers().headerTwo(headerTwo ?? '')
+                ])));
   }
 
   Center headerOne(String headerText) {

@@ -9,11 +9,10 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Headers().backgroundColorDark,
-        appBar: Headers().defaultBar(),
-        body: Column(children: [
-          Headers().headerOne('Visualizers'),
-          Headers().headerTwo('Made by Darren Seah'),
-          const Flexible(
+        appBar: Headers().defaultBar(
+            headerOne: 'Visualizers', headerTwo: 'Made by Darren Seah'),
+        body: const Column(children: [
+          Flexible(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -21,12 +20,14 @@ class MainScreen extends StatelessWidget {
                   BoxSelection(
                       childIcon: Icon(Icons.search), pageRoute: '/pathfinder'),
                   BoxSelection(
-                      childIcon: Icon(Icons.filter_alt_rounded),
+                      childIcon: Icon(Icons.brush_rounded),
                       pageRoute: '/floodfill')
                 ]),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   BoxSelection(childIcon: Icon(Icons.sort), pageRoute: '/sort'),
-                  BoxSelection(childIcon: Icon(Icons.terminal), pageRoute: '/'),
+                  BoxSelection(
+                      childIcon: Icon(Icons.circle_outlined),
+                      pageRoute: '/neural_network'),
                   BoxSelection(
                       childIcon: Icon(Icons.settings), pageRoute: '/settings')
                 ])

@@ -29,6 +29,7 @@ class Headers {
         bottom: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: backgroundColorDark,
+            elevation: 0,
             centerTitle: true,
             toolbarHeight: 100,
             title: Column(

@@ -22,6 +22,16 @@ class Settings extends StatelessWidget {
                   child: ListView(children: const [
                     Column(children: [
                       VersionLog(
+                          versionNum: 'Version 0.3.7',
+                          date: '25/12/2023',
+                          subtitle: 'Neural Network Page + Bug Fixes',
+                          information: [
+                            'Fixed Flood Fill and Pathfinding centering issues',
+                            'Neural Network: Basic layout and functional implementation',
+                            'Todo: Get the constraints of a box using GlobalKey to calculate height of offsets for CustomPainter',
+                            'Bug: Calculations runs before the container is instantiated, aka it’s accessing null key'
+                          ]),
+                      VersionLog(
                           versionNum: 'Version 0.3.6',
                           date: '24/12/2023',
                           subtitle: 'Overhauls',

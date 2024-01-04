@@ -6,6 +6,7 @@ import 'package:visualizer/screens/nerual_network.dart';
 import 'package:visualizer/screens/pathfinder.dart';
 import 'package:visualizer/screens/settings.dart';
 import 'package:visualizer/screens/sort.dart';
+import 'package:visualizer/screens/chess.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
@@ -17,7 +18,7 @@ void main() async {
 
     WindowOptions myOption = const WindowOptions(
         size: Size(1000, 900),
-        //minimumSize: Size(950, 900),
+        minimumSize: Size(950, 900),
         center: true,
         title: 'Visualizers',
         titleBarStyle: TitleBarStyle.hidden);
@@ -56,6 +57,7 @@ class MainApp extends StatelessWidget {
         '/floodfill': (context) => const FloodFill(),
         '/settings': (context) => const Settings(),
         '/neural_network': (context) => const NeuralNetwork(),
+        '/chess': (context) => Chess(),
       },
     );
   }

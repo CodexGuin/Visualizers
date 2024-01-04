@@ -31,7 +31,10 @@ class _BoxSelectionState extends State<BoxSelection> {
     Colors.amber,
     Colors.purple,
     Colors.pink,
-    Colors.cyan
+    Colors.cyan,
+    Colors.teal,
+    Colors.indigo,
+    Colors.brown,
   ];
 
   // * Function to return random color
@@ -41,18 +44,42 @@ class _BoxSelectionState extends State<BoxSelection> {
 
   // * Function to handle hover
   void handleHover(bool hovering) {
-    if (widget.pageRoute == '/pathfinder') {
-      text = 'Pathfinder';
-    } else if (widget.pageRoute == '/floodfill') {
-      text = 'Flood fill';
-    } else if (widget.pageRoute == '/sort') {
-      text = 'Sorting';
-    } else if (widget.pageRoute == '/neural_network') {
-      text = 'Neural Network';
-    } else if (widget.pageRoute == '/settings') {
-      text = 'Settings';
-    } else {
-      text = 'NOTHING';
+    switch (widget.pageRoute) {
+      case '/pathfinder':
+        {
+          text = 'Pathfinder';
+          break;
+        }
+      case '/floodfill':
+        {
+          text = 'Flood fill';
+          break;
+        }
+      case '/sort':
+        {
+          text = 'Sorting';
+          break;
+        }
+      case '/neural_network':
+        {
+          text = 'Neural Network';
+          break;
+        }
+      case '/settings':
+        {
+          text = 'Settings';
+          break;
+        }
+      case '/chess':
+        {
+          text = 'Chess';
+          break;
+        }
+      default:
+        {
+          text = 'NOTHING';
+          break;
+        }
     }
     if (hovering && !isHovering) {
       // Change color only when hover starts
@@ -92,6 +119,7 @@ class _BoxSelectionState extends State<BoxSelection> {
                       width: 300,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
+                          color: Colors.white.withOpacity(0.05),
                           border: Border.all(color: Colors.white54, width: 3)),
                       child: Center(
                           child: Text(text,

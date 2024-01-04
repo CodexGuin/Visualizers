@@ -1,9 +1,25 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:window_manager/window_manager.dart';
+import 'dart:async';
 
 class Headers {
   Color backgroundColorDark = const Color(0xFF242529);
+  Timer? _hoverTimer;
+
+  void _startHoverTimer(String text) {
+    _hoverTimer = Timer(3.seconds, () {
+      print('Hovered over text: $text for 3 seconds');
+    });
+  }
+
+  void _cancelHoverTimer() {
+    if (_hoverTimer != null) {
+      _hoverTimer!.cancel();
+      _hoverTimer = null;
+    }
+  }
 
   AppBar defaultBar({Widget? leading, String? headerOne, String? headerTwo}) {
     return AppBar(
@@ -54,11 +70,16 @@ class Headers {
 
   Center headerTwo(String headerText) {
     return Center(
-        child: Text(headerText,
-            style: const TextStyle(
-                color: Colors.white54,
-                fontWeight: FontWeight.w300,
-                fontSize: 15)));
+      child: MouseRegion(
+        onHover: (event) => _startHoverTimer(headerText),
+        onExit: (event) => _cancelHoverTimer(),
+        child: Text(
+          headerText,
+          style: const TextStyle(
+              color: Colors.white54, fontWeight: FontWeight.w300, fontSize: 15),
+        ),
+      ),
+    );
   }
 
   IconButton subpageButton(var context) {

@@ -21,10 +21,13 @@ class MainScreen extends StatelessWidget {
                       childIcon: Icon(Icons.search), pageRoute: '/pathfinder'),
                   BoxSelection(
                       childIcon: Icon(Icons.brush_rounded),
-                      pageRoute: '/floodfill')
+                      pageRoute: '/floodfill'),
+                  BoxSelection(childIcon: Icon(Icons.sort), pageRoute: '/sort'),
                 ]),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  BoxSelection(childIcon: Icon(Icons.sort), pageRoute: '/sort'),
+                  BoxSelection(
+                      childIcon: Icon(Icons.grid_3x3_rounded),
+                      pageRoute: '/chess'),
                   BoxSelection(
                       childIcon: Icon(Icons.circle_outlined),
                       pageRoute: '/neural_network'),

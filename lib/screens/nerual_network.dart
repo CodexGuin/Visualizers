@@ -204,8 +204,6 @@ class _NeuralNetworkState extends State<NeuralNetwork> {
                                                               Flexible(
                                                                 child:
                                                                     Container(
-                                                                  color: Colors
-                                                                      .white,
                                                                   padding: const EdgeInsets
                                                                       .symmetric(
                                                                       horizontal:

@@ -21,7 +21,6 @@ class _NeuralNetworkState extends State<NeuralNetwork> {
   late int totalColumnsToGenerate;
 
   // * Positions for neurons
-  GlobalKey? _key;
   RenderBox? renderBoxSize;
   int upperBound = 0;
   int lowerBound = 0;

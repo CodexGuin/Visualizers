@@ -36,6 +36,8 @@ class _ChessState extends State<Chess> {
 
   final ValueNotifier<List<Widget>> _chessBoardNotifier = ValueNotifier([]);
 
+  // * FEN string validation (Todo)
+
   // * FEN notation for starting position
   String FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
@@ -62,6 +64,8 @@ class _ChessState extends State<Chess> {
   List<Widget> decodeFEN(String fen) {
     // Split the FEN string and take only the board layout part
     String boardLayout = fen.split(' ')[0];
+
+    // If FEN is invalid, return current pieces list (return pieces)
 
     for (var char in Characters(boardLayout)) {
       if (char == ' ') {

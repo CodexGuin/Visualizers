@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:visualizer/provider/hover_provider.dart';
 import 'package:visualizer/screens/floodfill.dart';
 import 'package:visualizer/screens/main_screen.dart';
 import 'package:visualizer/screens/nerual_network.dart';
@@ -29,16 +31,16 @@ void main() async {
     });
   }
 
-  /* runApp(
+  runApp(
     MultiProvider(
-      providers: const [
+      providers: [
         ChangeNotifierProvider(
-          create: (context) => PathfinderState(),
+          create: (context) => HoverProvider(),
         )
       ],
       child: const MainApp(),
     ),
-  ); */
+  );
 
   runApp(const MainApp());
 }
@@ -57,7 +59,7 @@ class MainApp extends StatelessWidget {
         '/floodfill': (context) => const FloodFill(),
         '/settings': (context) => const Settings(),
         '/neural_network': (context) => const NeuralNetwork(),
-        '/chess': (context) => Chess(),
+        '/chess': (context) => const Chess(),
       },
     );
   }

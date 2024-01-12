@@ -9,6 +9,7 @@ import 'package:visualizer/screens/pathfinder.dart';
 import 'package:visualizer/screens/settings.dart';
 import 'package:visualizer/screens/sort.dart';
 import 'package:visualizer/screens/chess.dart';
+import 'package:visualizer/screens/testing.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
@@ -42,7 +43,7 @@ void main() async {
     ),
   );
 
-  runApp(const MainApp());
+  //runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -52,6 +53,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      //showPerformanceOverlay: true,
       routes: {
         '/': (context) => const MainScreen(),
         '/pathfinder': (context) => const Pathfinder(),
@@ -60,6 +62,7 @@ class MainApp extends StatelessWidget {
         '/settings': (context) => const Settings(),
         '/neural_network': (context) => const NeuralNetwork(),
         '/chess': (context) => const Chess(),
+        '/testing': (context) => const Testing(),
       },
     );
   }

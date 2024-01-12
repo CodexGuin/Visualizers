@@ -158,7 +158,7 @@ class _ChessState extends State<Chess> {
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  // * Chess grid
+                  // * FEN text field
                   Flexible(
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -191,6 +191,7 @@ class _ChessState extends State<Chess> {
                               }),
                         )
                       ])),
+                  // * Chess grid
                   Flexible(
                     flex: 8,
                     child: Container(
@@ -215,50 +216,10 @@ class _ChessState extends State<Chess> {
                                   // Alternate colors
                                   bool isBlack = (row + col) % 2 == 1;
 
-                                  return Container(
-                                    color: isBlack
-                                        ? darkSquareColor
-                                        : lightSquareColor,
-                                    child: Center(
-                                      child: Stack(
-                                        children: [
-                                          Center(
-                                            child: index % 8 == 0
-                                                ? Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.topLeft,
-                                                      child: Text(
-                                                        index.toString(),
-                                                        style: TextStyle(
-                                                          fontSize: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.01,
-                                                          color: isBlack
-                                                              ? Colors.white
-                                                              : Colors.black,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                : null,
-                                          ),
-                                          Center(
-                                            child: Container(
-                                              margin: const EdgeInsets.all(10),
-                                              child: Center(
-                                                child: pieces[
-                                                    index], // Directly use the widget from the pieces list
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                  // * Each cell
+                                  return ChessboardCell(
+                                    isBlack: isBlack,
+                                    child: pieces[index],
                                   );
                                 },
                               ),
@@ -268,6 +229,7 @@ class _ChessState extends State<Chess> {
                       ),
                     ),
                   ),
+                  // * Action row
                   Flexible(
                     child: Center(
                       child: Container(
@@ -277,43 +239,47 @@ class _ChessState extends State<Chess> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    pieces.clear();
-                                    FEN =
-                                        'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
-                                    pieces = decodeFEN(FEN);
-                                    for (var a in pieces) {
-                                      print(a);
-                                    }
-                                    print(pieces.length);
-                                  });
-                                },
-                                child: const Text('Debug')),
-                            const Gap(10),
-                            ElevatedButton(
-                                onPressed: () {
-                                  print(pieces.length);
-                                  for (int i = 0; i < pieces.length; i++) {
-                                    if (i % 8 == 0) {
-                                      print('');
-                                    } else {
-                                      print(pieces[i]);
-                                    }
+                            ActionButtons(
+                              text: 'Debug',
+                              onPressed: () {
+                                setState(() {
+                                  pieces.clear();
+                                  FEN =
+                                      'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
+                                  pieces = decodeFEN(FEN);
+                                  for (var a in pieces) {
+                                    print(a);
                                   }
-                                },
-                                child: const Text('FEN')),
+                                  print(pieces.length);
+                                });
+                              },
+                            ),
                             const Gap(10),
-                            ElevatedButton(
+                            ActionButtons(
+                              text: 'Board State',
+                              onPressed: () {
+                                print(pieces.length);
+                                for (int i = 0; i < pieces.length; i++) {
+                                  if (i % 8 == 0) {
+                                    print('');
+                                  } else {
+                                    print(pieces[i]);
+                                  }
+                                }
+                              },
+                            ),
+                            const Gap(10),
+                            ActionButtons(
+                                text: 'Clear Board',
                                 onPressed: () {
                                   setState(() {
                                     pieces = List.generate(
                                         64, (index) => Container());
                                     FEN = '';
                                   });
-                                },
-                                child: const Text('Clear board')),
+                                }),
+                            const Gap(10),
+                            ActionButtons(text: 'Test', onPressed: () {})
                           ],
                         ),
                       ),
@@ -325,6 +291,112 @@ class _ChessState extends State<Chess> {
           ),
         ],
       ),
+    );
+  }
+}
+
+/* // * Original cell child
+Container(
+  color: isBlack
+      ? darkSquareColor
+      : lightSquareColor,
+  child: Center(
+    child: Stack(
+      children: [
+        Center(
+          child: index % 8 == 0
+              ? Padding(
+                  padding:
+                      const EdgeInsets.all(
+                          5),
+                  child: Align(
+                    alignment:
+                        Alignment.topLeft,
+                    child: Text(
+                      index.toString(),
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(
+                                    context)
+                                .size
+                                .width *
+                            0.01,
+                        color: isBlack
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ),
+                  ),
+                )
+              : null,
+        ),
+        Center(
+          child: Container(
+            margin:
+                const EdgeInsets.all(10),
+            child: Center(
+              child: pieces[
+                  index], // Directly use the widget from the pieces list
+            ),
+          ),
+        ),
+      ],
+    ),
+  ),
+);
+*/
+
+class ChessboardCell extends StatefulWidget {
+  final bool isBlack;
+  final Widget child;
+  const ChessboardCell({super.key, required this.isBlack, required this.child});
+
+  @override
+  State<ChessboardCell> createState() => _ChessboardCellState();
+}
+
+class _ChessboardCellState extends State<ChessboardCell> {
+  bool isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => isHovered = true),
+        onExit: (_) => setState(() => isHovered = false),
+        child: Container(
+          color: isHovered
+              ? Colors.green
+              : (widget.isBlack ? darkSquareColor : lightSquareColor),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: widget.child,
+          ),
+        ));
+  }
+}
+
+class ActionButtons extends StatelessWidget {
+  final Function()? onPressed;
+  final String text;
+  final Color bgColor, textColor;
+  const ActionButtons(
+      {super.key,
+      this.onPressed,
+      required this.text,
+      this.bgColor = Colors.white,
+      this.textColor = Colors.black});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(bgColor),
+          foregroundColor: MaterialStateProperty.all(textColor),
+          fixedSize: MaterialStateProperty.all(Size(
+              MediaQuery.of(context).size.width * 0.1,
+              MediaQuery.of(context).size.height * 0.05))),
+      onPressed: onPressed,
+      child: Text(text),
     );
   }
 }

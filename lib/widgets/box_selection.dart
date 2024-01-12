@@ -75,6 +75,11 @@ class _BoxSelectionState extends State<BoxSelection> {
           text = 'Chess';
           break;
         }
+      case '/testing':
+        {
+          text = 'Testing';
+          break;
+        }
       default:
         {
           text = 'NOTHING';
@@ -103,7 +108,7 @@ class _BoxSelectionState extends State<BoxSelection> {
       border: Border.all(color: Colors.white, width: 3),
       borderRadius: BorderRadius.circular(10));
 
-  // * Actual widget
+  // * Actual overlay widget
   @override
   Widget build(BuildContext context) {
     return OverlayPortal(
@@ -112,7 +117,7 @@ class _BoxSelectionState extends State<BoxSelection> {
           return Animate(
               effects: const [FadeEffect()],
               child: Positioned(
-                  top: MediaQuery.sizeOf(context).height / 3,
+                  top: MediaQuery.sizeOf(context).height / 5,
                   left: MediaQuery.sizeOf(context).width / 2 - 150,
                   child: Container(
                       height: 100,

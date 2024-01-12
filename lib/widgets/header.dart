@@ -13,6 +13,7 @@ class Headers {
       {Widget? leading,
       String? headerOne,
       String? headerTwo,
+      bool easterEgg = false,
       BuildContext? ctx}) {
     return AppBar(
         backgroundColor: backgroundColorDark,
@@ -45,7 +46,8 @@ class Headers {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Headers().headerOne(headerOne ?? ''),
-                  Headers().headerTwo(headerTwo ?? '', ctx)
+                  Headers()
+                      .headerTwo(headerTwo ?? '', ctx, easterEgg: easterEgg)
                 ])));
   }
 
@@ -60,19 +62,20 @@ class Headers {
                     fontSize: 50))));
   }
 
-  Center headerTwo(String headerText, BuildContext? ctx) {
+  Center headerTwo(String headerText, BuildContext? ctx,
+      {bool easterEgg = false}) {
     return Center(
         child: GestureDetector(
-      onTap: () => Provider.of<HoverProvider>(ctx!).addTap(),
-      child: MouseRegion(
-          onHover: (event) => {},
-          onExit: (event) => {},
-          child: Text(headerText,
-              style: const TextStyle(
-                  color: Colors.white54,
-                  fontWeight: FontWeight.w300,
-                  fontSize: 15))),
-    ));
+            onTap: () {
+              easterEgg
+                  ? Provider.of<HoverProvider>(ctx!, listen: false).addTap()
+                  : null;
+            },
+            child: Text(headerText,
+                style: const TextStyle(
+                    color: Colors.white54,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 15))));
   }
 
   IconButton subpageButton(var context) {

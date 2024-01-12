@@ -22,6 +22,20 @@ class Settings extends StatelessWidget {
                   child: ListView(children: const [
                     Column(children: [
                       VersionLog(
+                          versionNum: 'Version 0.3.8',
+                          date: '12 Jan 2024',
+                          subtitle: 'Playground Environment',
+                          information: [
+                            'Added a playground environment for testing purposes',
+                            'Added funny easter egg :3',
+                            'Main page: Tweaked UI',
+                            'Playground: Currently testing if CustomPainter or Container is more efficient',
+                            'Chess: Extracted cells into another class for modularity and functionality',
+                            'Chess: Added onHover colors for cells that are hovered',
+                            'Todo: Function for checking legal moves of each piece',
+                            'Fixed: Simple code refactoring'
+                          ]),
+                      VersionLog(
                           versionNum: 'Version 0.3.7',
                           date: '25/12/2023',
                           subtitle: 'Neural Network Page + Bug Fixes',

@@ -42,50 +42,25 @@ class _BoxSelectionState extends State<BoxSelection> {
     return colList[Random().nextInt(colList.length)].withOpacity(0.2);
   }
 
+  // * Map of route to text strings
+  final Map<String, String> routeToText = {
+    // * Visualizers
+    '/pathfinder': 'Pathfinder',
+    '/floodfill': 'Flood fill',
+    '/sort': 'Sorting',
+    '/chess': 'Chess',
+    '/neural_network': 'Neural Network',
+    '/cellular_automata': 'Cellular Automata',
+
+    // * Settings
+    '/settings': 'Settings',
+    '/testing': 'Testing',
+  };
+
   // * Function to handle hover
   void handleHover(bool hovering) {
-    switch (widget.pageRoute) {
-      case '/pathfinder':
-        {
-          text = 'Pathfinder';
-          break;
-        }
-      case '/floodfill':
-        {
-          text = 'Flood fill';
-          break;
-        }
-      case '/sort':
-        {
-          text = 'Sorting';
-          break;
-        }
-      case '/neural_network':
-        {
-          text = 'Neural Network';
-          break;
-        }
-      case '/settings':
-        {
-          text = 'Settings';
-          break;
-        }
-      case '/chess':
-        {
-          text = 'Chess';
-          break;
-        }
-      case '/testing':
-        {
-          text = 'Testing';
-          break;
-        }
-      default:
-        {
-          text = 'NOTHING';
-          break;
-        }
-    }
+    text = routeToText[widget.pageRoute] ?? 'NOTHING';
+
     if (hovering && !isHovering) {
       // Change color only when hover starts
       hoveredColor = getRandomColor();

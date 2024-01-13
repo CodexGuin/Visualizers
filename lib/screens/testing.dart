@@ -25,6 +25,8 @@ class _TestingState extends State<Testing> {
           headerOne: 'Testing',
           headerTwo: 'Playground for testings anything'),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
               child: Container(

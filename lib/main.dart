@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:visualizer/provider/hover_provider.dart';
+import 'package:visualizer/screens/cellular_automata.dart';
 import 'package:visualizer/screens/floodfill.dart';
 import 'package:visualizer/screens/main_screen.dart';
 import 'package:visualizer/screens/nerual_network.dart';
@@ -55,14 +56,20 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //showPerformanceOverlay: true,
       routes: {
+        // * Main
         '/': (context) => const MainScreen(),
+
+        // * Visualizers
         '/pathfinder': (context) => const Pathfinder(),
-        '/sort': (context) => const Sort(),
         '/floodfill': (context) => const FloodFill(),
-        '/settings': (context) => const Settings(),
-        '/neural_network': (context) => const NeuralNetwork(),
+        '/sort': (context) => const Sort(),
         '/chess': (context) => const Chess(),
+        '/neural_network': (context) => const NeuralNetwork(),
+        '/cellular_automata': (context) => const CellularAutomata(),
+
+        // * Others
         '/testing': (context) => const Testing(),
+        '/settings': (context) => const Settings(),
       },
     );
   }

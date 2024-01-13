@@ -24,6 +24,7 @@ class MainScreen extends StatelessWidget {
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               // * Visualizers
               Row(
+                  // * Header
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -49,26 +50,38 @@ class MainScreen extends StatelessWidget {
                             color: Colors.white70))
                   ]),
               const Gap(20),
-              const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                BoxSelection(
-                    childIcon: Icon(Icons.search), pageRoute: '/pathfinder'),
-                BoxSelection(
-                    childIcon: Icon(Icons.brush_rounded),
-                    pageRoute: '/floodfill'),
-                BoxSelection(childIcon: Icon(Icons.sort), pageRoute: '/sort')
-              ]),
-              const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                BoxSelection(
-                    childIcon: Icon(Icons.grid_3x3_rounded),
-                    pageRoute: '/chess'),
-                BoxSelection(
-                    childIcon: Icon(Icons.circle_outlined),
-                    pageRoute: '/neural_network')
-              ]),
+              const Row(
+                  // * Row 1
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    BoxSelection(
+                        childIcon: Icon(Icons.search),
+                        pageRoute: '/pathfinder'),
+                    BoxSelection(
+                        childIcon: Icon(Icons.brush_rounded),
+                        pageRoute: '/floodfill'),
+                    BoxSelection(
+                        childIcon: Icon(Icons.sort), pageRoute: '/sort')
+                  ]),
+              const Row(
+                  // * Row 2
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    BoxSelection(
+                        childIcon: Icon(Icons.grid_3x3_rounded),
+                        pageRoute: '/chess'),
+                    BoxSelection(
+                        childIcon: Icon(Icons.circle_outlined),
+                        pageRoute: '/neural_network'),
+                    BoxSelection(
+                        childIcon: Icon(Icons.auto_awesome_mosaic_rounded),
+                        pageRoute: '/cellular_automata'),
+                  ]),
               const Gap(20),
 
               // * Misc stuff here
               Row(
+                  // * Header
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -94,13 +107,16 @@ class MainScreen extends StatelessWidget {
                             color: Colors.white70))
                   ]),
               const Gap(20),
-              const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                BoxSelection(
-                    childIcon: Icon(Icons.settings_accessibility_rounded),
-                    pageRoute: '/testing'),
-                BoxSelection(
-                    childIcon: Icon(Icons.settings), pageRoute: '/settings')
-              ])
+              const Row(
+                  // * Row 1
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    BoxSelection(
+                        childIcon: Icon(Icons.settings_accessibility_rounded),
+                        pageRoute: '/testing'),
+                    BoxSelection(
+                        childIcon: Icon(Icons.settings), pageRoute: '/settings')
+                  ])
             ]),
             Consumer<HoverProvider>(builder: (context, obj, child) {
               int a = obj.tapMoreThanThree;
